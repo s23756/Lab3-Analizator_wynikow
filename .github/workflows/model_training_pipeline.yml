@@ -1,0 +1,37 @@
+name: Model Training and Evaluation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas numpy matplotlib scikit-learn
+
+    - name: Run model training and evaluation
+      run: |
+        python your_script.py
+
+    - name: Upload Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: predictions_plot
+        path: predictions_plot.png
